@@ -58,24 +58,23 @@ df_test.Age = df_train.Age.fillna(df_train.Age.mean())
 df_train.Fare = df_train.Fare.fillna(df_train.Fare.mean())
 df_test.Fare = df_train.Fare.fillna(df_train.Fare.mean())
 ### Sex
-df_train.Sex = df_train.Sex.fillna(1)
-df_test.Sex = df_train.Sex.fillna(1)
+df_train.Sex = df_train.Sex.fillna(df_train.Sex.mean())
+df_test.Sex = df_train.Sex.fillna(df_train.Sex.mean())
 ### SibSp
 df_train.SibSp = df_train.SibSp.fillna(0)
 df_test.SibSp = df_train.SibSp.fillna(0)
 ### Parch
-df_train.Parch = df_train.Parch.fillna(0.38)
-df_test.Parch = df_train.Parch.fillna(0.38)
+df_train.Parch = df_train.Parch.fillna(0)
+df_test.Parch = df_train.Parch.fillna(0)
 
 # Sex - Change male to 1 and female to 0
 df_train['Sex'] = df_train['Sex'].map( {'female': 0, 'male': 1} )
 df_test['Sex'] = df_test['Sex'].map( {'female': 0, 'male': 1} )
 
 # Define X_train & Y_train & X_test
-X_train=df_train.drop(['Embarked','Survived','PassengerId','Name'], axis=1)
+X_train=df_train.drop(['Embarked','Survived','PassengerId','Name','Ticket', 'Cabin'], axis=1)
 Y_train = df_train["Survived"]
-X_test=df_test.drop(['Embarked','PassengerId','Name'], axis=1)
-X_train.head(5)
+X_test=df_test.drop(['Embarked','PassengerId','Name','Ticket', 'Cabin'], axis=1)
 
 #######################################################################################################################
 ###########################################  // Models // #############################################################
@@ -146,7 +145,7 @@ models.sort_values(by='Score', ascending=False)
 
 
 
-submission = pd.DataFrame({"PassengerId": df_test["PassengerId"],"Survived": Y_predsvc})
+submission = pd.DataFrame({"PassengerId": df_test["PassengerId"],"Survived": Y_pred_rf})
     
 submission.head()
 
